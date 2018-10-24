@@ -20,7 +20,7 @@ class Data():
         # self.list_station.clear()
         in_param = list()
         # in_param.clear()
-        ini = open_ini_file()
+        ini = open_ini_file.inst()
 
         format_to_excel = (
             ['Индивидуальный перевод стрелок'],

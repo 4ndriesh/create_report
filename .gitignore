@@ -106,14 +106,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-/lnx/
-/downblog.spec
-/py/archive_pack/
-/py/archive_unpack/
-/py/app/tmp.py
-/py/app/tmp.qml
-/py/app/app.qmlc
-/py/app/app.qml
+
 /envlinux/
 /python_script/report/
 /python_script/project/

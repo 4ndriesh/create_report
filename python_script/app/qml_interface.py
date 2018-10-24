@@ -8,13 +8,13 @@ from total_main import *
 from walk_dir import get_list_project_with_value
 import os
 # dict_initial_data= {'project': '1','station': '1', 'report':'1' }
-
+ini = open_ini_file.inst()
 class Qmlinterface():
     def __init__(self):
         self.project ={}
         self.project_out ={}
-        self.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.path_to_qml = os.path.join(self.BASE_DIR, 'qml', 'Main.qml')
+        ini.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.path_to_qml = os.path.join(ini.BASE_DIR, 'qml', 'Main.qml')
         self.list_pr=[]
         self.list_st=[]
         self.list_rp=[]

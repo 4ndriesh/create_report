@@ -3,23 +3,21 @@ __author__ = 'BiziurAA'
 from class_Sheets import Sheets
 import pandas as pd
 import shutil
-import os
 import sys
 from class_Data import Data
 from logging_err import *
-
-from sys import argv
+from ini_file import open_ini_file
 import os
 
 
 
 
 def total_main():
+    ini = open_ini_file.inst()
     dt = Data()
-    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # path = os.getcwd()
-    path_report=os.path.join(path,'report')
-    path_temp = os.path.join(path, 'temp')
+    path_report=os.path.join(ini.BASE_DIR,'report')
+    path_temp = os.path.join(ini.BASE_DIR, 'temp')
     for conv_file in dt.list_station:
         name_report = conv_file
         cr_report_TU = Sheets()

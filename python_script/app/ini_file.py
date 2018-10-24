@@ -5,12 +5,26 @@ from logging_err import *
 
 
 class open_ini_file():
-    ini_parser = configparser.ConfigParser()
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    path_ini = os.path.join(BASE_DIR, 'con_config.ini')
-    ini_parser.read(path_ini)
+    __instance = None
+
+    @staticmethod
+    def inst():
+        if open_ini_file.__instance == None:
+            open_ini_file.__instance = open_ini_file()
+        return open_ini_file.__instance
+
     def __init__(self):
-        pass
+        import sys, os
+        if getattr(sys, 'frozen', False):
+            # If the application is run as a bundle, the pyInstaller bootloader
+            # extends the sys module by a flag frozen=True and sets the app
+            # path into variable _MEIPASS'.
+            self.BASE_DIR = os.getcwd()
+        else:
+            self.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.ini_parser = configparser.ConfigParser()
+        self.path_ini = os.path.join(self.BASE_DIR, 'con_config.ini')
+        self.ini_parser.read(self.path_ini)
         # try:
         #     # self.ini_parser = configparser.ConfigParser()
         #     # self.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
