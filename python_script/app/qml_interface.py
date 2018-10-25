@@ -1,8 +1,9 @@
-from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot, QUrl
 from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtQml import QQmlListProperty, QQmlApplicationEngine
+from PyQt5.QtQuick import QQuickView
 from sys import argv, exit
-from ini_file import open_ini_file
 from total_main import *
 
 from walk_dir import get_list_project_with_value
@@ -13,7 +14,7 @@ class Qmlinterface():
     def __init__(self):
         self.project ={}
         self.project_out ={}
-        ini.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # ini.BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.path_to_qml = os.path.join(ini.BASE_DIR, 'qml', 'Main.qml')
         self.list_pr=[]
         self.list_st=[]
@@ -111,33 +112,24 @@ class Pars_station(QObject):
     def channels(self, value):
         if value: self.prj_or_st.append(value)
         self.Pars_project_Changed.emit()
-ini = open_ini_file()
+
 project = Pars_station()
 station = Pars_station()
 report = Pars_station()
 qmli = Qmlinterface()
 def qml():
-
-
     app = QGuiApplication(argv)
-    engine = QQmlApplicationEngine()
-    engine.rootContext().setContextProperty('store', project)
-    engine.rootContext().setContextProperty('station', station)
-    engine.rootContext().setContextProperty('report', report)
-
-    engine.load(qmli.path_to_qml)
+    view = QQuickView()
+    view.setSource(QUrl.fromLocalFile(qmli.path_to_qml))
+    view.rootContext().setContextProperty('store', project)
+    view.rootContext().setContextProperty('station', station)
+    view.rootContext().setContextProperty('report', report)
     qmli.project=get_list_project_with_value()
     if qmli.project:
         list_pr = list(qmli.project.keys())[0]
         qmli.prints('project', list_pr)
 
-    # qml.list_station_for_inreface(store,station,report)
+    app.exec_()
 
-    if not engine.rootObjects():
-        exit(-1)
-    try:
-        exit(app.exec_())
-    except:
-        print("Exiting")
 
 

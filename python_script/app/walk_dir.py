@@ -1,19 +1,20 @@
 import re
 import os
 from openpyxl import load_workbook, Workbook
+from ini_file import open_ini_file
 
 dir_filters = {
     'project': re.compile('.*(\.xlsx)$'),
     'report': re.compile('.*(\.xlsx)$')
 }
 
-path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ini = open_ini_file.inst()
 
 def get_list_project_with_value():
     list_station = []
     file_project = []
     list_report = []
-    for dir, list_dir, file in walk_dbsta(path):
+    for dir, list_dir, file in walk_dbsta(ini.BASE_DIR):
         if dir == 'project':
             file_project.append(file)
             list_station.append(get_list_sheet(os.path.join(list_dir, file)))
