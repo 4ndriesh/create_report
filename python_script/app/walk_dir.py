@@ -53,7 +53,7 @@ def walk_dbsta(scan_dir):
 
 def get_list_sheet(work_path_project):
     wb = load_workbook(work_path_project)
-    list = wb.get_sheet_names()
+    list = wb.sheetnames
     list_station = []
     for l in list:
         if not (l.startswith('К_') or l.startswith('ТУ_')):
